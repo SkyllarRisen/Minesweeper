@@ -36,8 +36,15 @@ void Game::Go()
 	gfx.EndFrame();
 }
 
+bool Game::GameOver() const
+{
+	return abortGame;
+}
+
 void Game::UpdateModel()
 {
+	if (wnd.kbd.KeyIsPressed(VK_ESCAPE))
+		abortGame = true;
 }
 
 void Game::ComposeFrame()

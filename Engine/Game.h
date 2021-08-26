@@ -31,6 +31,7 @@ public:
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
 	void Go();
+	bool GameOver() const;
 private:
 	void ComposeFrame();
 	void UpdateModel();
@@ -42,5 +43,6 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	bool abortGame = false;
 	/********************************/
 };

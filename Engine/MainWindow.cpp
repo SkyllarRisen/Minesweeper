@@ -40,16 +40,28 @@ MainWindow::MainWindow( HINSTANCE hInst,wchar_t * pArgs )
 	RegisterClassEx( &wc );
 
 	// create window & get hWnd
+
 	RECT wr;
-	wr.left = 350;
+	wr.left = 0;
 	wr.right = Graphics::ScreenWidth + wr.left;
-	wr.top = 100;
+	wr.top = 0;
 	wr.bottom = Graphics::ScreenHeight + wr.top;
-	AdjustWindowRect( &wr,WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,FALSE );
+	AdjustWindowRect( &wr, WS_POPUP, FALSE );
 	hWnd = CreateWindow( wndClassName,L"Chili DirectX Framework",
-		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
+		WS_POPUP,
 		wr.left,wr.top,wr.right - wr.left,wr.bottom - wr.top,
 		nullptr,nullptr,hInst,this );
+
+	// centers window on screen
+	HMONITOR hMon = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);
+	MONITORINFO info;
+	info.cbSize = sizeof(MONITORINFO);
+	GetMonitorInfo(hMon, &info);
+	int monitorWidth = info.rcMonitor.right - info.rcMonitor.left;
+	int monitorHeight = info.rcMonitor.bottom - info.rcMonitor.top;
+	int windowWidth = wr.right - wr.left;
+	int windowHeight = wr.bottom - wr.top;
+	SetWindowPos(hWnd, NULL, (monitorWidth - windowWidth) / 2, (monitorHeight - windowHeight) / 2, windowWidth, windowHeight, SWP_NOSIZE | SWP_NOZORDER);
 
 	// throw exception if something went terribly wrong
 	if( hWnd == nullptr )
@@ -187,6 +199,7 @@ LRESULT MainWindow::HandleMsg( HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam )
 	}
 	case WM_LBUTTONDOWN:
 	{
+		SetActiveWindow(hWnd);
 		int x = LOWORD( lParam );
 		int y = HIWORD( lParam );
 		mouse.OnLeftPressed( x,y );
