@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "Vectors.h"
 
 
 
@@ -35,12 +36,45 @@ unsigned int Entity::ID() const
 
 const Vec3D& Entity::Pos() const
 {
-    return m_pos;
+
+    return m_pos;   
 }
 
 const Vec3D& Entity::Vel() const
 {
     return m_vel;
+}
+
+
+
+void Entity::Pos(const double x, const double y, const double z)
+{
+    m_pos = Vec3D(x, y, z);
+}
+
+void Entity::Pos(const Vec2D& xy, const double z)
+{
+    m_pos = Vec3D(xy, z);
+}
+
+void Entity::Pos(const Vec3D& xyz)
+{
+    m_pos = xyz;
+}
+
+void Entity::Vel(const double x, const double y, const double z)
+{
+    m_vel = Vec3D(x, y, z);
+}
+
+void Entity::Vel(const Vec2D& xy, const double z)
+{
+    m_vel = Vec3D(xy, z);
+}
+
+void Entity::Vel(const Vec3D& xyz)
+{
+    m_vel = xyz;
 }
 
 bool Entity::operator==(const Entity& e) const

@@ -70,6 +70,8 @@ public:
     Vec3D Direction() const;
     Vec3D& Normalize();
 
+    const Vec2D& Get2D() const;
+
 private:
     Vec2D m_xy;
     double m_z;

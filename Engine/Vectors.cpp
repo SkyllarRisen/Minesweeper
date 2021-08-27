@@ -315,3 +315,8 @@ Vec3D& Vec3D::Normalize()
 {
     return *this = (*this).Direction();
 }
+
+const Vec2D& Vec3D::Get2D() const
+{
+        return m_xy;
+}

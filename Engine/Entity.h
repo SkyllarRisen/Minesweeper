@@ -20,6 +20,13 @@ public:
     bool operator==(const Entity& e) const;
 protected:
 
+    void Pos(const double x, const double y, const double z);
+    void Pos(const Vec2D& xy, const double z = 0);
+    void Pos(const Vec3D& xyz);
+    void Vel(const double x, const double y, const double z);
+    void Vel(const Vec2D& xy, const double z = 0);
+    void Vel(const Vec3D& xyz);
+
 private:
 
     const std::string m_type;
