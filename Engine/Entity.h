@@ -21,12 +21,12 @@ public:
     bool operator==(const Entity& e) const;
 protected:
 
-    void Pos(const double x, const double y, const double z);
-    void Pos(const Vec2D& xy, const double z = 0);
-    void Pos(const Vec3D& xyz);
-    void Vel(const double x, const double y, const double z);
-    void Vel(const Vec2D& xy, const double z = 0);
-    void Vel(const Vec3D& xyz);
+    void Move(const double x, const double y, const double z);
+    void Move(const Vec2D& xy, const double z = 0);
+    void Move(const Vec3D& xyz);
+    void changeVel(const double x, const double y, const double z);
+    void changeVel(const Vec2D& xy, const double z = 0);
+    void changeVel(const Vec3D& xyz);
 
 private:
 

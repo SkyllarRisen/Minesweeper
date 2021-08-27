@@ -47,34 +47,34 @@ const Vec3D& Entity::Vel() const
 
 
 
-void Entity::Pos(const double x, const double y, const double z)
+void Entity::Move(const double x, const double y, const double z)
 {
-    m_pos = Vec3D(x, y, z);
+    m_pos += Vec3D(x, y, z);
 }
 
-void Entity::Pos(const Vec2D& xy, const double z)
+void Entity::Move(const Vec2D& xy, const double z)
 {
-    m_pos = Vec3D(xy, z);
+    m_pos += Vec3D(xy, z);
 }
 
-void Entity::Pos(const Vec3D& xyz)
+void Entity::Move(const Vec3D& xyz)
 {
-    m_pos = xyz;
+    m_pos += xyz;
 }
 
-void Entity::Vel(const double x, const double y, const double z)
+void Entity::changeVel(const double x, const double y, const double z)
 {
-    m_vel = Vec3D(x, y, z);
+    m_vel += Vec3D(x, y, z);
 }
 
-void Entity::Vel(const Vec2D& xy, const double z)
+void Entity::changeVel(const Vec2D& xy, const double z)
 {
-    m_vel = Vec3D(xy, z);
+    m_vel += Vec3D(xy, z);
 }
 
-void Entity::Vel(const Vec3D& xyz)
+void Entity::changeVel(const Vec3D& xyz)
 {
-    m_vel = xyz;
+    m_vel += xyz;
 }
 
 bool Entity::operator==(const Entity& e) const
