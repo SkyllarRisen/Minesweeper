@@ -12,10 +12,11 @@ public:
     Entity(std::string type, Vec3D pos, Vec3D vel = Vec3D(0,0,0));
     static unsigned int numberOfEntities;
 
-    unsigned int ID() const;
+
     std::string Type() const;
     const Vec3D& Pos() const;
     const Vec3D& Vel() const;
+    unsigned int ID() const;
 
     bool operator==(const Entity& e) const;
 protected:
