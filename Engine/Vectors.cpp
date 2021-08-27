@@ -5,6 +5,13 @@
 
 double g_err = std::nan("VEC_INDEX_OOB");
 
+Vec2D::Vec2D()
+    :
+    m_x(0),
+    m_y(0)
+{
+}
+
 Vec2D::Vec2D(const double x, const double y)
     :
     m_x(x),
@@ -145,8 +152,14 @@ Vec2D& Vec2D::Normalize()
 //Vec3D
 Vec3D::Vec3D(const double x, const double y, const double z)
     :
-    m_x(x),
-    m_y(y),
+    m_xy(x,y),
+    m_z(z)
+{
+}
+
+Vec3D::Vec3D(const Vec2D xy, const double z)
+    :
+    m_xy(xy),
     m_z(z)
 {
 }
@@ -159,9 +172,9 @@ double& Vec3D::operator[](const int index)
     switch (index)
     {
     case 0:
-        return m_x;
+        return m_xy[0];
     case 1:
-        return m_y;
+        return m_xy[1];
     case 2:
         return m_z;
     default:
@@ -176,9 +189,9 @@ const double& Vec3D::operator[](const int index) const
     switch (index)
     {
     case 0:
-        return m_x;
+        return m_xy[0];
     case 1:
-        return m_y;
+        return m_xy[1];
     case 2:
         return m_z;
     default:

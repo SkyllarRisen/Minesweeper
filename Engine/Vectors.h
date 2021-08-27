@@ -6,7 +6,7 @@ class Vec2D
 {
 public:
 
-    Vec2D() = default;
+    Vec2D();
     Vec2D(const double x, const double y);
 
     double& operator[](const int index);
@@ -41,8 +41,9 @@ class Vec3D
 {
 public:
 
-    Vec3D() = default;
+    Vec3D(const Vec2D xy = Vec2D(), const double z = 0);
     Vec3D(const double x, const double y, const double z);
+    
 
     double& operator[](const int index);
     const double& operator[](const int index) const;
@@ -70,6 +71,7 @@ public:
     Vec3D& Normalize();
 
 private:
-    double m_x, m_y, m_z;
+    Vec2D m_xy;
+    double m_z;
 };
 
