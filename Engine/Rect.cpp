@@ -10,6 +10,7 @@ RectD::RectD(const double left, const double right, const double top, const doub
     m_bottom(bottom)
 {
     Organize();
+
 }
 
 RectD::RectD(const Vec2D& topLeft, const Vec2D& bottomRight)
