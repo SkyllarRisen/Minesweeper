@@ -58,6 +58,14 @@ bool RectD::IsOverlapping(const RectD& rect) const
         && m_bottom > rect.Top() && m_top < rect.Bottom();
 }
 
+bool RectD::IsWithin(const RectD& rect) const
+{
+    if (Left() >= rect.Left() && Right() <= rect.Right() && Top() >= rect.Top() && Bottom() <= rect.Bottom())
+        return true;
+    else
+        return false;
+}
+
 const Vec2D& RectD::GetCenter() const
 {
     return Vec2D( (Right() - Left()) / 2, (Bottom() - Top()) / 2 );
