@@ -307,13 +307,26 @@ void Graphics::BeginFrame()
 	memset( pSysBuffer,0u,sizeof( Color ) * Graphics::ScreenHeight * Graphics::ScreenWidth );
 }
 
-void Graphics::PutPixel( int x,int y,Color c )
+void Graphics::PutPixel( const int x, const int y, const Color c )
 {
 	assert( x >= 0 );
 	assert( x < int( Graphics::ScreenWidth ) );
 	assert( y >= 0 );
 	assert( y < int( Graphics::ScreenHeight ) );
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
+}
+
+void Graphics::DrawRect(const RectD& rect, const Color c)
+{
+	assert(rect.Left() < rect.Right());
+	assert(rect.Top() < rect.Bottom());
+	for (int y = rect.Top(); y <= rect.Bottom(); ++y)
+	{
+		for (int x = rect.Left(); x <= rect.Right(); ++x)
+		{
+			PutPixel(x, y, c);
+		}
+	}
 }
 
 RectD Graphics::GetScreenRect() const
