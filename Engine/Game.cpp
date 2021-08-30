@@ -20,6 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "FrameTimer.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -30,8 +31,15 @@ Game::Game( MainWindow& wnd )
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
-	UpdateModel();
+	gfx.BeginFrame();
+	double elapsedTime = ft.Mark();
+	frameTime = elapsedTime;
+	while (elapsedTime > 0.0)
+	{
+		const double dt = std::min(elapsedTime, 0.001);
+		UpdateModel(dt);
+		elapsedTime -= dt;
+	}
 	ComposeFrame();
 	gfx.EndFrame();
 }
@@ -41,7 +49,7 @@ bool Game::GameOver() const
 	return abortGame;
 }
 
-void Game::UpdateModel()
+void Game::UpdateModel(const double dt)
 {
 	if (wnd.kbd.KeyIsPressed(VK_ESCAPE))
 		abortGame = true;
