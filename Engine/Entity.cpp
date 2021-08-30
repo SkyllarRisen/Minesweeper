@@ -6,7 +6,7 @@
 unsigned int Entity::numberOfEntities = 0u;
 
 
-Entity::Entity(std::string type, Vec2D pos, Vec2D vel)
+Entity::Entity(const std::string type, const Vec2D& pos, const Vec2D& vel)
     :
     m_type(type),
     m_id(numberOfEntities++),
@@ -15,7 +15,7 @@ Entity::Entity(std::string type, Vec2D pos, Vec2D vel)
 {
 }
 
-Entity::Entity(std::string type, Vec3D pos, Vec3D vel)
+Entity::Entity(const std::string type, const Vec3D& pos, const Vec3D& vel)
     :
     m_type(type),
     m_id(numberOfEntities++),
@@ -49,12 +49,12 @@ const Vec3D& Entity::Vel() const
 
 void Entity::Move(const double x, const double y, const double z)
 {
-    m_pos += Vec3D(x, y, z);
+    Move(Vec3D(x, y, z));
 }
 
 void Entity::Move(const Vec2D& xy, const double z)
 {
-    m_pos += Vec3D(xy, z);
+    Move(Vec3D(xy, z));
 }
 
 void Entity::Move(const Vec3D& xyz)
@@ -62,19 +62,49 @@ void Entity::Move(const Vec3D& xyz)
     m_pos += xyz;
 }
 
-void Entity::changeVel(const double x, const double y, const double z)
+void Entity::Pos(const double x, const double y, const double z)
 {
-    m_vel += Vec3D(x, y, z);
+    Pos(Vec3D(x, y, z));
 }
 
-void Entity::changeVel(const Vec2D& xy, const double z)
+void Entity::Pos(const Vec2D& xy, const double z)
 {
-    m_vel += Vec3D(xy, z);
+    Pos(Vec3D(xy, z));
 }
 
-void Entity::changeVel(const Vec3D& xyz)
+void Entity::Pos(const Vec3D& xyz)
+{
+    m_pos = xyz;
+}
+
+void Entity::ChangeVel(const double x, const double y, const double z)
+{
+    ChangeVel(Vec3D(x, y, z));
+}
+
+void Entity::ChangeVel(const Vec2D& xy, const double z)
+{
+    ChangeVel(Vec3D(xy, z));
+}
+
+void Entity::ChangeVel(const Vec3D& xyz)
 {
     m_vel += xyz;
+}
+
+void Entity::Vel(const double x, const double y, const double z)
+{
+    Vel(Vec3D(x, y, z));
+}
+
+void Entity::Vel(const Vec2D& xy, const double z)
+{
+    Vel(Vec3D(xy, z));
+}
+
+void Entity::Vel(const Vec3D& xyz)
+{
+    m_vel = xyz;
 }
 
 bool Entity::operator==(const Entity& e) const

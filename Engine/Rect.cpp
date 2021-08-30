@@ -52,8 +52,13 @@ void RectD::Organize()
         std::swap(m_top, m_bottom);
 }
 
-bool RectD::isOverlapping(const RectD& rect) const
+bool RectD::IsOverlapping(const RectD& rect) const
 {
     return m_right > rect.Left() && m_left < rect.Right()
         && m_bottom > rect.Top() && m_top < rect.Bottom();
+}
+
+const Vec2D& RectD::GetCenter() const
+{
+    return Vec2D( (Right() - Left()) / 2, (Bottom() - Top()) / 2 );
 }

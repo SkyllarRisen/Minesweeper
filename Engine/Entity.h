@@ -8,8 +8,8 @@ class Entity
 public:
 
     Entity() = delete;
-    Entity(std::string type, Vec2D pos = Vec2D(0, 0), Vec2D vel = Vec2D(0,0));
-    Entity(std::string type, Vec3D pos, Vec3D vel = Vec3D(0,0,0));
+    Entity(const std::string type, const Vec2D& pos = Vec2D(0, 0), const Vec2D& vel = Vec2D(0,0));
+    Entity(const std::string type, const Vec3D& pos, const Vec3D& vel = Vec3D(0,0,0));
     
 
 
@@ -24,9 +24,16 @@ protected:
     void Move(const double x, const double y, const double z);
     void Move(const Vec2D& xy, const double z = 0);
     void Move(const Vec3D& xyz);
-    void changeVel(const double x, const double y, const double z);
-    void changeVel(const Vec2D& xy, const double z = 0);
-    void changeVel(const Vec3D& xyz);
+    void Pos(const double x, const double y, const double z);
+    void Pos(const Vec2D& xy, const double z = 0);
+    void Pos(const Vec3D& xyz);
+
+    void ChangeVel(const double x, const double y, const double z);
+    void ChangeVel(const Vec2D& xy, const double z = 0);
+    void ChangeVel(const Vec3D& xyz);
+    void Vel(const double x, const double y, const double z);
+    void Vel(const Vec2D& xy, const double z = 0);
+    void Vel(const Vec3D& xyz);
 
     static unsigned int numberOfEntities;
 
