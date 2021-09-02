@@ -19,6 +19,13 @@ Vec2D::Vec2D(const double x, const double y)
 {
 }
 
+Vec2D::Vec2D(const Vec2I& v)
+    :
+    m_x(double(v[0])),
+    m_y(double(v[1]))
+{
+}
+
 double& Vec2D::operator[](const int index)
 {
     assert(index >= 0);
@@ -161,6 +168,13 @@ Vec3D::Vec3D(const Vec2D xy, const double z)
     :
     m_xy(xy),
     m_z(z)
+{
+}
+
+Vec3D::Vec3D(const Vec3I& v)
+    :
+    m_xy(v.Get2D()),
+    m_z(double(v[2]))
 {
 }
 
@@ -340,6 +354,13 @@ Vec2I::Vec2I(const int x, const int y)
 {
 }
 
+Vec2I::Vec2I(const Vec2D& v)
+    :
+    m_x(int(v[0])),
+    m_y(int(v[1]))
+{
+}
+
 int& Vec2I::operator[](const int index)
 {
     assert(index >= 0);
@@ -452,6 +473,13 @@ Vec3I::Vec3I(const int x, const int y, const int z)
     :
     m_xy(x, y),
     m_z(z)
+{
+}
+
+Vec3I::Vec3I(const Vec3D& v)
+    :
+    m_xy(v.Get2D()),
+    m_z(int(v[2]))
 {
 }
 

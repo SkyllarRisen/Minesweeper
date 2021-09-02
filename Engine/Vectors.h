@@ -8,6 +8,7 @@ public:
 
     Vec2D();
     Vec2D(const double x, const double y);
+    Vec2D(const class Vec2I& v);
 
     double& operator[](const int index);
     const double& operator[](const int index) const;
@@ -43,7 +44,7 @@ public:
 
     Vec3D(const Vec2D xy = Vec2D(), const double z = 0);
     Vec3D(const double x, const double y, const double z);
-    
+    Vec3D(const class Vec3I& v);
 
     double& operator[](const int index);
     const double& operator[](const int index) const;
@@ -85,6 +86,7 @@ public:
 
     Vec2I();
     Vec2I(const int x, const int y);
+    Vec2I(const Vec2D& v);
 
     int& operator[](const int index);
     const int& operator[](const int index) const;
@@ -115,7 +117,7 @@ public:
 
     Vec3I(const Vec2I xy = Vec2I(), const int z = 0);
     Vec3I(const int x, const int y, const int z);
-
+    Vec3I(const Vec3D& v);
 
     int& operator[](const int index);
     const int& operator[](const int index) const;

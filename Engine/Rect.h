@@ -29,4 +29,3 @@ private:
     double m_bottom;
  
 };
-
