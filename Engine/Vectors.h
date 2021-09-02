@@ -77,3 +77,69 @@ private:
     double m_z;
 };
 
+
+
+class Vec2I
+{
+public:
+
+    Vec2I();
+    Vec2I(const int x, const int y);
+
+    int& operator[](const int index);
+    const int& operator[](const int index) const;
+
+    Vec2I operator+(const Vec2I& v) const;
+    Vec2I& operator+=(const Vec2I& v);
+    Vec2I operator-(const Vec2I& v) const;
+    Vec2I& operator-=(const Vec2I& v);
+
+    Vec2I operator*(const double n) const;
+    friend Vec2I operator*(const double n, const Vec2I& v);
+    Vec2I& operator*=(const double n);
+    Vec2I operator/(const double n) const;
+    friend Vec2I operator/(const double n, const Vec2I& v);
+    Vec2I& operator/=(const double n);
+
+    Vec2I operator-() const;
+    int operator*(const Vec2I& v) const;
+
+private:
+    int m_x, m_y;
+};
+
+
+class Vec3I
+{
+public:
+
+    Vec3I(const Vec2I xy = Vec2I(), const int z = 0);
+    Vec3I(const int x, const int y, const int z);
+
+
+    int& operator[](const int index);
+    const int& operator[](const int index) const;
+
+    Vec3I operator+(const Vec3I& v) const;
+    Vec3I& operator+=(const Vec3I& v);
+    Vec3I operator-(const Vec3I& v) const;
+    Vec3I& operator-=(const Vec3I& v);
+
+    Vec3I operator*(const double n) const;
+    friend Vec3I operator*(const double n, const Vec3I& v);
+    Vec3I& operator*=(const double n);
+    Vec3I operator/(const double n) const;
+    friend Vec3I operator/(const double n, const Vec3I& v);
+    Vec3I& operator/=(const double n);
+
+    Vec3I operator-() const;
+    int operator*(const Vec3I& v) const;
+    Vec3I operator%(const Vec3I& v) const;
+    Vec3I& operator%=(const Vec3I& v);
+
+    const Vec2I& Get2D() const;
+
+private:
+    Vec2I m_xy;
+    int m_z;
+};
