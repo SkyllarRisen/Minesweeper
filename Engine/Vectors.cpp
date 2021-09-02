@@ -447,6 +447,16 @@ Vec2I operator/(const double n, const Vec2I& v)
     return v / n;
 }
 
+int Vec2I::NormSq() const
+{
+    return *this * *this;
+}
+
+double Vec2I::Norm() const
+{
+    return sqrt(NormSq());
+}
+
 //Vec3I
 Vec3I::Vec3I(const int x, const int y, const int z)
     :
@@ -591,6 +601,15 @@ Vec3I operator/(const double n, const Vec3I& v)
     return v / n;
 }
 
+int Vec3I::NormSq() const
+{
+    return *this * *this;
+}
+
+double Vec3I::Norm() const
+{
+    return sqrt(NormSq());
+}
 
 const Vec2I& Vec3I::Get2D() const
 {

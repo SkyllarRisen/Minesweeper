@@ -104,6 +104,9 @@ public:
     Vec2I operator-() const;
     int operator*(const Vec2I& v) const;
 
+    int NormSq() const;
+    double Norm() const;
+
 private:
     int m_x, m_y;
 };
@@ -136,6 +139,9 @@ public:
     int operator*(const Vec3I& v) const;
     Vec3I operator%(const Vec3I& v) const;
     Vec3I& operator%=(const Vec3I& v);
+
+    int NormSq() const;
+    double Norm() const;
 
     const Vec2I& Get2D() const;
 
