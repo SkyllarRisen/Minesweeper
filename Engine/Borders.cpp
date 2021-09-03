@@ -1,4 +1,5 @@
 #include "Borders.h"
+#include "Graphics.h"
 #include <cassert>
 
 Borders::Borders(const RectD& outerBounds, const double thickness, const Color c)
@@ -7,8 +8,12 @@ Borders::Borders(const RectD& outerBounds, const double thickness, const Color c
 {
     if (thickness < 0)
     {
-        m_innerBounds = outerBounds;
         m_thickness = -thickness;
+        m_innerBounds = outerBounds;
+        assert(m_innerBounds.Left() - m_thickness >= 0);
+        assert(m_innerBounds.Top() - m_thickness >= 0);
+        assert(m_innerBounds.Right() + m_thickness < Graphics::ScreenWidth);
+        assert(m_innerBounds.Bottom() + m_thickness < Graphics::ScreenHeight);
     }
     else
     {
@@ -17,6 +22,10 @@ Borders::Borders(const RectD& outerBounds, const double thickness, const Color c
         m_thickness = thickness;
         Vec2D thickVec = Vec2D(thickness, thickness);
         m_innerBounds = RectD(Vec2D(outerBounds.Left(), outerBounds.Top()) + thickVec, Vec2D(outerBounds.Right(), outerBounds.Bottom()) - thickVec);
+        assert(m_innerBounds.Left() - m_thickness >= 0);
+        assert(m_innerBounds.Top() - m_thickness >= 0);
+        assert(m_innerBounds.Right() + m_thickness < Graphics::ScreenWidth);
+        assert(m_innerBounds.Bottom() + m_thickness < Graphics::ScreenHeight);
     }
 }
 
@@ -31,7 +40,8 @@ const RectD Borders::OuterBounds() const
     return RectD(Vec2D(m_innerBounds.Left(), m_innerBounds.Top()) - thickVec, Vec2D(m_innerBounds.Right(), m_innerBounds.Bottom()) + thickVec);
 }
 
-void Borders::Draw() const
+void Borders::Draw(Graphics& gfx) const
 {
-
+    gfx.DrawRect(OuterBounds(), m_c);
+    gfx.DrawRect(InnerBounds(), Colors::Black);
 }

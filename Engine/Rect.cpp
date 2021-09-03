@@ -64,7 +64,7 @@ bool RectD::IsWithin(const RectD& rect) const
     return Left() >= rect.Left() && Right() <= rect.Right() && Top() >= rect.Top() && Bottom() <= rect.Bottom();
 }
 
-const Vec2D& RectD::GetCenter() const
+const Vec2D RectD::GetCenter() const
 {
     return Vec2D( (Right() - Left()) / 2, (Bottom() - Top()) / 2 );
 }

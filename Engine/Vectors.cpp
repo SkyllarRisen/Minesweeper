@@ -338,7 +338,7 @@ const Vec2D& Vec3D::Get2D() const
 
 //integer vectors
 
-int g_errI = std::nan("VEC_INDEX_OOB");
+int g_errI = int(std::nan("VEC_INDEX_OOB"));
 
 Vec2I::Vec2I()
     :
@@ -421,8 +421,8 @@ Vec2I& Vec2I::operator-=(const Vec2I& v)
 Vec2I Vec2I::operator*(const double n) const
 {
     return Vec2I(
-        (*this)[0] * n,
-        (*this)[1] * n
+        int(double((*this)[0]) * n),
+        int(double((*this)[1]) * n)
     );
 }
 
@@ -436,8 +436,8 @@ Vec2I Vec2I::operator/(const double n) const
 {
     assert(n != 0);
     return Vec2I(
-        (*this)[0] / n,
-        (*this)[1] / n
+        int(double((*this)[0]) / n),
+        int(double((*this)[1]) / n)
     );
 }
 
@@ -566,9 +566,9 @@ Vec3I& Vec3I::operator-=(const Vec3I& v)
 Vec3I Vec3I::operator*(const double n) const
 {
     return Vec3I(
-        (*this)[0] * n,
-        (*this)[1] * n,
-        (*this)[2] * n
+        int(double((*this)[0]) * n),
+        int(double((*this)[1]) * n),
+        int(double((*this)[2]) * n)
     );
 }
 
@@ -582,9 +582,9 @@ Vec3I Vec3I::operator/(const double n) const
 {
     assert(n != 0);
     return Vec3I(
-        (*this)[0] / n,
-        (*this)[1] / n,
-        (*this)[2] / n
+        int(double((*this)[0]) / n),
+        int(double((*this)[1]) / n),
+        int(double((*this)[2]) / n)
     );
 }
 

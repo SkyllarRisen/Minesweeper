@@ -321,9 +321,9 @@ void Graphics::DrawRect(const RectD& rect, const Color c)
 	assert(rect.Left() < rect.Right());
 	assert(rect.Top() < rect.Bottom());
 	assert(rect.IsWithin(GetScreenRect()));
-	for (int y = rect.Top(); y <= rect.Bottom(); ++y)
+	for (int y = int(rect.Top()); y <= rect.Bottom(); ++y)
 	{
-		for (int x = rect.Left(); x <= rect.Right(); ++x)
+		for (int x = int(rect.Left()); x <= rect.Right(); ++x)
 		{
 			PutPixel(x, y, c);
 		}
