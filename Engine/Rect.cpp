@@ -66,8 +66,8 @@ bool RectD::IsWithin(const RectD& rect) const
 
 bool RectD::Contains(const Vec2D& pos) const
 {
-    return pos[0] > Left() && pos[0] < Right()
-        && pos[1] > Top() && pos[1] < Bottom();
+    return pos[0] >= Left() && pos[0] < Right()
+        && pos[1] >= Top() && pos[1] < Bottom();
 }
 
 const Vec2D RectD::GetCenter() const

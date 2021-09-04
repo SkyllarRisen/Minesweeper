@@ -343,7 +343,10 @@ void Graphics::DrawSprite(const std::vector<unsigned char>& v, const Color c, co
 	Sprite pixelMap(v, c);
 	for (int i = 0; i < pixelMap.GetSprite().size(); ++i)
 	{
-		PutPixel(screenPos[0] + (i % Sprite::dim), screenPos[1] + (i / Sprite::dim), pixelMap.GetSprite().at(i));
+		if (v.at(i) > 0u)
+		{
+			PutPixel(screenPos[0] + (i % Sprite::dim), screenPos[1] + (i / Sprite::dim), pixelMap.GetSprite().at(i));
+		}
 	}
 }
 

@@ -71,7 +71,7 @@ public:
 		{
 			return type;
 		}
-		std::pair<int,int> GetPos() const
+		const Vec2I& GetPos() const
 		{
 			return{ x,y };
 		}

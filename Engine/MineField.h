@@ -28,8 +28,9 @@ public:
         bool HasMine() const;
         bool IsRevealed();
         bool IsFlagged();
+        int GetAdjMines();
 
-        void Reveal();
+        void Reveal(const Vec2I& gridPos, MineField& m);
         void ToggleFlag();
         void SpawnMine();
         void SetAdjMines(const int n);
@@ -44,6 +45,7 @@ public:
 
 
     };
+    void RevealAdj(const Vec2I& gridPos);
     void OnRevealClick(const Vec2I& screenPos);
     void OnToggleFlagClick(const Vec2I& screenPos);
     void Draw(Graphics& gfx) const;

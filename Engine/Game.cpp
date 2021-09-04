@@ -26,7 +26,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	mField( Vec2I(Graphics::ScreenWidth - ( 20 * MineField::Tile::dim + 20 ), Graphics::ScreenHeight - ( 20 * MineField::Tile::dim + 20 ) ) / 2 , 20, 20, 10)
+	mField( Vec2I(Graphics::ScreenWidth - ( 20 * MineField::Tile::dim + 20 ), Graphics::ScreenHeight - ( 20 * MineField::Tile::dim + 20 ) ) / 2 , 20, 20, 50)
 {
 }
 
@@ -55,22 +55,22 @@ void Game::UpdateModel(const double dt)
 	
 	if (wnd.kbd.KeyIsPressed(VK_ESCAPE))
 		abortGame = true;
-	if (wnd.mouse.LeftIsPressed())
+
+	while (!wnd.mouse.IsEmpty())
 	{
-		mField.OnRevealClick(wnd.mouse.GetPos());
-	}
-	if (wnd.mouse.RightIsPressed())
-	{
-		if (!hasPressedRB)
+		const Mouse::Event e = wnd.mouse.Read();
+
+		if (e.GetType() == Mouse::Event::Type::LPress)
 		{
-			mField.OnToggleFlagClick(wnd.mouse.GetPos());
+			mField.OnRevealClick(e.GetPos());
 		}
-		hasPressedRB = true;
-	}
-	else
-	{
-		hasPressedRB = false;
-	}
+
+		if (e.GetType() == Mouse::Event::Type::RPress)
+		{
+			mField.OnToggleFlagClick(e.GetPos());
+		}
+
+	}	
 }
 
 void Game::ComposeFrame()
