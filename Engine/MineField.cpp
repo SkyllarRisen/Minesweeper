@@ -2,6 +2,7 @@
 #include "Vectors.h"
 #include "Graphics.h"
 #include "Grid.h"
+#include "Sprite.h"
 #include <cassert>
 #include <random>
 
@@ -22,29 +23,73 @@ bool MineField::Tile::HasMine() const
     return m_hasMine;
 }
 
+bool MineField::Tile::IsRevealed()
+{
+    return m_state == State::Revealed;
+}
+
+bool MineField::Tile::IsFlagged()
+{
+    return m_state == State::Flagged;
+}
+
+void MineField::Tile::Reveal()
+{
+    assert(m_state == State::Hidden);
+    m_state = State::Revealed;
+}
+
+void MineField::Tile::ToggleFlag()
+{
+    assert(!IsRevealed());
+    if (!IsFlagged())
+    {
+        m_state = State::Flagged;
+    }
+    else
+    {
+        m_state = State::Hidden;
+    }
+}
+
 void MineField::Tile::SpawnMine()
 {
     assert(!m_hasMine);
     m_hasMine = true;
 }
 
-void MineField::Tile::SetState(State s)
+void MineField::Tile::SetAdjMines(const int n)
 {
-    m_state = s;
+    m_adjMines = n;
 }
+
+
 
 void MineField::Tile::Draw(Graphics& gfx, const MineField& m, const Vec2I& gridPos) const
 {
     switch (m_state)
     {
     case State::Hidden:
-        gfx.DrawRect(RectD(m.Pos().Get2D() + gridPos * m_dim, m_dim, m_dim), Colors::Blue);
+        gfx.DrawSprite(Sprites::TileHidden, Colors::Blue, m.Pos().Get2D() + gridPos * dim);
         break;
     case State::Flagged:
-        gfx.DrawRect(RectD(m.Pos().Get2D() + gridPos * m_dim, m_dim, m_dim), Colors::Red);
+        gfx.DrawRect(RectD(m.Pos().Get2D() + gridPos * dim, dim, dim), Colors::Red);
         break;
     case State::Revealed:
-        gfx.DrawRect(RectD(m.Pos().Get2D() + gridPos * m_dim, m_dim, m_dim), Colors::White);
+        gfx.DrawSprite(Sprites::Tile, Colors::Blue, m.Pos().Get2D() + gridPos * dim);
+        if (HasMine())
+        {
+            gfx.DrawRect(RectD(m.Pos().Get2D() + Vec2I(5, 5) + gridPos * dim, dim-10, dim-10), Colors::Red);
+        }
+        else
+        {
+            assert(m_adjMines >= 0);
+            assert(m_adjMines <= 8);
+            switch (m_adjMines)
+            {
+
+            }
+        }
         break;
     }
 }
@@ -53,7 +98,7 @@ MineField::MineField(const Vec2I& pos, const int width, const int height, const 
     :
     Entity("Board", pos),
     m_field(width, height),
-    m_border(RectD(Pos().Get2D(), width*Tile::m_dim, height*Tile::m_dim), 5, Colors::Blue)
+    m_border(RectD(Pos().Get2D(), width*Tile::dim, height*Tile::dim), -10, Colors::Blue)
 {
     assert(width > 0);
     assert(height > 0);
@@ -74,6 +119,30 @@ MineField::MineField(const Vec2I& pos, const int width, const int height, const 
 
         m_field.At(spawnPos).SpawnMine();
     }
+    for (Vec2I gridPos(0, 0); gridPos[1] < m_field.Height(); ++gridPos[1])
+    {
+        for (gridPos[0] = 0; gridPos[0] < m_field.Width(); ++gridPos[0])
+        {
+            int counter = 0;
+            for (int j = gridPos[1] - 1; j <= gridPos[1] + 1; ++j)
+            {
+                if (j >= 0 && j < m_field.Height())
+                {
+                    for (int i = gridPos[0] - 1; i <= gridPos[0] + 1; ++i)
+                    {
+                        if (i >= 0 && i < m_field.Width())
+                        {
+                            if (m_field.At(Vec2I(i, j)).HasMine())
+                            {
+                                ++counter;
+                            }
+                        }
+                    }
+                }
+            }
+            m_field.At(gridPos).SetAdjMines(counter);
+        }
+    }
 }
 
 void MineField::Draw(Graphics& gfx) const
@@ -81,9 +150,34 @@ void MineField::Draw(Graphics& gfx) const
     m_border.Draw(gfx);
     for (Vec2I gridPos(0,0); gridPos[1] < m_field.Height(); ++gridPos[1])
     {
-        for (; gridPos[0] < m_field.Width(); ++gridPos[0])
+        for (gridPos[0] = 0; gridPos[0] < m_field.Width(); ++gridPos[0])
         {
             m_field.At(gridPos).Draw(gfx, *this, gridPos);
+        }
+    }
+}
+
+void MineField::OnRevealClick(const Vec2I& screenPos)
+{
+    if (m_border.InnerBounds().Contains(screenPos))
+    {
+        Vec2I gridPos = (screenPos - Pos().Get2D()) / Tile::dim;
+        if (!(m_field.At(gridPos).IsRevealed() || m_field.At(gridPos).IsFlagged()))
+        {
+            m_field.At(gridPos).Reveal();
+        }
+    }
+
+}
+
+void MineField::OnToggleFlagClick(const Vec2I& screenPos)
+{
+    if (m_border.InnerBounds().Contains(screenPos))
+    {
+        Vec2I gridPos = (screenPos - Pos().Get2D()) / Tile::dim;
+        if (!m_field.At(gridPos).IsRevealed())
+        {
+            m_field.At(gridPos).ToggleFlag();
         }
     }
 }

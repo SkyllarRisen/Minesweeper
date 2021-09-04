@@ -26,20 +26,26 @@ public:
 
         State GetState() const;
         bool HasMine() const;
+        bool IsRevealed();
+        bool IsFlagged();
 
+        void Reveal();
+        void ToggleFlag();
         void SpawnMine();
-        void SetState(State s);
+        void SetAdjMines(const int n);
         void Draw(Graphics& gfx, const MineField& m, const Vec2I& gridPos) const;
-        static constexpr int m_dim = 20;
+        static constexpr int dim = 30;
 
     private:
 
         bool m_hasMine;
         State m_state;
+        int m_adjMines;
 
 
     };
-
+    void OnRevealClick(const Vec2I& screenPos);
+    void OnToggleFlagClick(const Vec2I& screenPos);
     void Draw(Graphics& gfx) const;
 
 private:

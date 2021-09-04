@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "FrameTimer.h"
+#include "MineField.h"
 
 class Game
 {
@@ -53,5 +54,7 @@ private:
 	FrameTimer ft;
 	double frameTime;
 	bool abortGame = false;
+	MineField mField;
+	bool hasPressedRB = false;
 	/********************************/
 };

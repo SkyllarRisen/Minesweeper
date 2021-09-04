@@ -22,6 +22,9 @@
 #include "Graphics.h"
 #include "DXErr.h"
 #include "ChiliException.h"
+#include "Colors.h"
+#include "Vectors.h"
+#include "Sprite.h"
 #include <assert.h>
 #include <string>
 #include <array>
@@ -334,6 +337,17 @@ RectD Graphics::GetScreenRect() const
 {
 	return RectD(Vec2D(0.0,0.0), double(ScreenWidth), double(ScreenHeight));
 }
+
+void Graphics::DrawSprite(const std::vector<unsigned char>& v, const Color c, const Vec2I& screenPos)
+{
+	Sprite pixelMap(v, c);
+	for (int i = 0; i < pixelMap.GetSprite().size(); ++i)
+	{
+		PutPixel(screenPos[0] + (i % Sprite::dim), screenPos[1] + (i / Sprite::dim), pixelMap.GetSprite().at(i));
+	}
+}
+
+
 
 
 //////////////////////////////////////////////////

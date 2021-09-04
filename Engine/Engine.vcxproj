@@ -153,6 +153,7 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="Vectors.h" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +171,7 @@
     <ClCompile Include="MineField.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Vectors.cpp" />
   </ItemGroup>
   <ItemGroup>

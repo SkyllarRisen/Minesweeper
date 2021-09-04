@@ -24,6 +24,7 @@
 #include "ChiliException.h"
 #include "Colors.h"
 #include "Rect.h"
+#include <vector>
 
 class Graphics
 {
@@ -59,6 +60,7 @@ public:
 	void PutPixel( const int x, const int y, const Color c );
 	void DrawRect(const RectD& rect, const Color c);
 	RectD GetScreenRect() const;
+	void DrawSprite(const std::vector<unsigned char>& v, const Color c, const Vec2I& screenPos);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
