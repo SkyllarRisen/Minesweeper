@@ -12,7 +12,7 @@ public:
     Grid(const int width, const int height);
     T& At(const Vec2I& v);
     const T& At(const Vec2I& v) const;
-    const std::vector<T>& ListTiles() const;
+    const std::vector<T>& List() const;
     int Width() const;
     int Height() const;
 private:
@@ -53,7 +53,7 @@ const T& Grid<T>::At(const Vec2I& v) const
 
 template<class T>
 inline 
-const std::vector<T>& Grid<T>::ListTiles() const
+const std::vector<T>& Grid<T>::List() const
 {
     return m_grid;
 }

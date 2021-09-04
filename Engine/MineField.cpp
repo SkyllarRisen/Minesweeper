@@ -24,17 +24,17 @@ bool MineField::Tile::HasMine() const
     return m_hasMine;
 }
 
-bool MineField::Tile::IsRevealed()
+bool MineField::Tile::IsRevealed() const
 {
     return m_state == State::Revealed;
 }
 
-bool MineField::Tile::IsFlagged()
+bool MineField::Tile::IsFlagged() const
 {
     return m_state == State::Flagged;
 }
 
-int MineField::Tile::GetAdjMines()
+int MineField::Tile::GetAdjMines() const
 {
     return m_adjMines;
 }
@@ -134,7 +134,8 @@ MineField::MineField(const Vec2I& pos, const int width, const int height, const 
     :
     Entity("Board", pos),
     m_field(width, height),
-    m_border(RectD(Pos().Get2D(), width*Tile::dim, height*Tile::dim), -10, Colors::Blue)
+    m_border(RectD(Pos().Get2D(), width*Tile::dim, height*Tile::dim), -10, Colors::Blue),
+    m_gameOver(false)
 {
     assert(width > 0);
     assert(height > 0);
@@ -196,30 +197,35 @@ void MineField::Draw(Graphics& gfx) const
 
 bool MineField::OnRevealClick(const Vec2I& screenPos)
 {
-    if (m_border.InnerBounds().Contains(screenPos))
+    if (m_border.InnerBounds().Contains(screenPos) && !m_gameOver)
     {
         Vec2I gridPos = (screenPos - Pos().Get2D()) / Tile::dim;
         if (!(m_field.At(gridPos).IsRevealed() || m_field.At(gridPos).IsFlagged()))
         {
             m_field.At(gridPos).Reveal(gridPos, *this);
+            if (m_field.At(gridPos).HasMine())
+            {
+                m_gameOver = true;
+                return false;
+            }
+            GameIsWon();
         }
-        if (m_field.At(gridPos).HasMine())
-        {
-            return false;
-        }
+
     }
     return true;
 }
 
 void MineField::OnToggleFlagClick(const Vec2I& screenPos)
 {
-    if (m_border.InnerBounds().Contains(screenPos))
+    if (m_border.InnerBounds().Contains(screenPos) && !m_gameOver)
     {
         Vec2I gridPos = (screenPos - Pos().Get2D()) / Tile::dim;
         if (!m_field.At(gridPos).IsRevealed())
         {
             m_field.At(gridPos).ToggleFlag();
+            GameIsWon();
         }
+
     }
 }
 
@@ -242,4 +248,17 @@ void MineField::RevealAdj(const Vec2I& gridPos)
             }        
         }
     }
+}
+
+bool MineField::GameIsWon()
+{
+    for (const Tile& t : m_field.List())
+    {
+        if (t.HasMine() && !t.IsFlagged() || !t.HasMine() && !t.IsRevealed())
+        {
+            return false;
+        }
+    }
+    m_gameOver = true;
+    return true;
 }

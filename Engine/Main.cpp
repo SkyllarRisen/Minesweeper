@@ -34,7 +34,10 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR pArgs,INT )
 			{
 				theGame.Go();
 				if (theGame.GameOver())
+				{
 					return 0;
+				}
+					
 			}
 		}
 		catch( const ChiliException& e )

@@ -21,12 +21,15 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "FrameTimer.h"
+#include <thread>
+#include <chrono>
+
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	mField( Vec2I(Graphics::ScreenWidth - ( 20 * MineField::Tile::dim + 20 ), Graphics::ScreenHeight - ( 20 * MineField::Tile::dim + 20 ) ) / 2 , 20, 20, 50)
+	mField( Vec2I(Graphics::ScreenWidth - ( 20 * MineField::Tile::dim + 20 ), Graphics::ScreenHeight - ( 20 * MineField::Tile::dim + 20 ) ) / 2 , 20, 20, 20)
 {
 }
 
@@ -62,10 +65,7 @@ void Game::UpdateModel(const double dt)
 
 		if (e.GetType() == Mouse::Event::Type::LPress)
 		{
-			if (!mField.OnRevealClick(e.GetPos()))
-			{
-				abortGame = true;
-			}
+			mField.OnRevealClick(e.GetPos());
 		}
 
 		if (e.GetType() == Mouse::Event::Type::RPress)

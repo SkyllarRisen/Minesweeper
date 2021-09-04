@@ -26,9 +26,9 @@ public:
 
         State GetState() const;
         bool HasMine() const;
-        bool IsRevealed();
-        bool IsFlagged();
-        int GetAdjMines();
+        bool IsRevealed() const;
+        bool IsFlagged() const;
+        int GetAdjMines() const;
 
         void Reveal(const Vec2I& gridPos, MineField& m);
         void ToggleFlag();
@@ -45,15 +45,18 @@ public:
 
 
     };
+
     void RevealAdj(const Vec2I& gridPos);
     bool OnRevealClick(const Vec2I& screenPos);
     void OnToggleFlagClick(const Vec2I& screenPos);
     void Draw(Graphics& gfx) const;
+    bool GameIsWon();
 
 private:
 
     Grid<Tile> m_field;
     const Borders m_border;
+    bool m_gameOver;
 
 };
 
