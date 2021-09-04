@@ -46,7 +46,7 @@ public:
 
     };
     void RevealAdj(const Vec2I& gridPos);
-    void OnRevealClick(const Vec2I& screenPos);
+    bool OnRevealClick(const Vec2I& screenPos);
     void OnToggleFlagClick(const Vec2I& screenPos);
     void Draw(Graphics& gfx) const;
 

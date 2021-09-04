@@ -62,7 +62,10 @@ void Game::UpdateModel(const double dt)
 
 		if (e.GetType() == Mouse::Event::Type::LPress)
 		{
-			mField.OnRevealClick(e.GetPos());
+			if (!mField.OnRevealClick(e.GetPos()))
+			{
+				abortGame = true;
+			}
 		}
 
 		if (e.GetType() == Mouse::Event::Type::RPress)

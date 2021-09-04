@@ -10,7 +10,7 @@
 MineField::Tile::Tile()
     :
     m_hasMine(false),
-    m_state(State::Revealed)
+    m_state(State::Hidden)
 {
 }
 
@@ -194,7 +194,7 @@ void MineField::Draw(Graphics& gfx) const
     }
 }
 
-void MineField::OnRevealClick(const Vec2I& screenPos)
+bool MineField::OnRevealClick(const Vec2I& screenPos)
 {
     if (m_border.InnerBounds().Contains(screenPos))
     {
@@ -203,8 +203,12 @@ void MineField::OnRevealClick(const Vec2I& screenPos)
         {
             m_field.At(gridPos).Reveal(gridPos, *this);
         }
+        if (m_field.At(gridPos).HasMine())
+        {
+            return false;
+        }
     }
-
+    return true;
 }
 
 void MineField::OnToggleFlagClick(const Vec2I& screenPos)
