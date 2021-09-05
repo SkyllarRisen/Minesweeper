@@ -39,14 +39,10 @@ int MineField::Tile::GetAdjMines() const
     return m_adjMines;
 }
 
-void MineField::Tile::Reveal(const Vec2I& gridPos, MineField& m)
+void MineField::Tile::Reveal()
 {
     assert(m_state == State::Hidden);
     m_state = State::Revealed;
-    if (m_adjMines == 0)
-    {
-        m.RevealAdj(gridPos);
-    }
 }
 
 void MineField::Tile::ToggleFlag()
@@ -202,7 +198,11 @@ bool MineField::OnRevealClick(const Vec2I& screenPos)
         Vec2I gridPos = (screenPos - Pos().Get2D()) / Tile::dim;
         if (!(m_field.At(gridPos).IsRevealed() || m_field.At(gridPos).IsFlagged()))
         {
-            m_field.At(gridPos).Reveal(gridPos, *this);
+            m_field.At(gridPos).Reveal();
+            if (m_field.At(gridPos).GetAdjMines() == 0)
+            {
+                RevealAdj(gridPos);
+            }
             if (m_field.At(gridPos).HasMine())
             {
                 m_gameOver = true;
@@ -244,7 +244,11 @@ void MineField::RevealAdj(const Vec2I& gridPos)
         {                
             if (!m_field.At(Vec2I(i, j)).IsRevealed())
             {
-                m_field.At(Vec2I(i, j)).Reveal(Vec2I(i, j), *this);
+                m_field.At(Vec2I(i, j)).Reveal();
+                if (m_field.At(Vec2I(i, j)).GetAdjMines() == 0)
+                {
+                    RevealAdj(Vec2I(i, j));
+                }
             }        
         }
     }

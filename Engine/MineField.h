@@ -30,7 +30,7 @@ public:
         bool IsFlagged() const;
         int GetAdjMines() const;
 
-        void Reveal(const Vec2I& gridPos, MineField& m);
+        void Reveal();
         void ToggleFlag();
         void SpawnMine();
         void SetAdjMines(const int n);
